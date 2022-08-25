@@ -3,8 +3,6 @@ import { galleryItems } from "./gallery-items.js";
 const { create, visible } = window.basicLightbox;
 // Change code below this line
 
-
-console.log(create, visible);
 const oneGallery = createGallary(galleryItems);
 
 function createGallary(galleryItems) {
@@ -28,15 +26,19 @@ function createGallary(galleryItems) {
 const addItemsToGallery = document.querySelector(".gallery");
 addItemsToGallery.insertAdjacentHTML("beforeend", oneGallery);
 
-
 addItemsToGallery.addEventListener("click", (event) => {
   event.preventDefault();
+
   const targetEl = event.target;
-  // console.log(targetEl);
   if (targetEl.nodeName !== "IMG") {
     return;
   }
+
+  // отримання url великого зображення
+
   const imageSrc = targetEl.dataset.source;
+
+  // картинка модального вікна
   const instance = create(
     `<div class="modal">
       <img
@@ -46,21 +48,26 @@ addItemsToGallery.addEventListener("click", (event) => {
       />
     </div>`
   );
+
+  // відчинення модального вікна
   instance.show();
-  console.log(instance);
-  console.log(targetEl);
-  // const
+
+  //зачинення модального вікна
+
   const modalImgRef = document.querySelector(".modal__image");
   modalImgRef.addEventListener("click", instance.close);
+
+  //зачинення клавішею клавіатури
   const keydownHandler = (event) => {
     console.log("click", event);
-
     if (event.key !== "Escape") {
       return;
     }
     instance.close();
-    window.removeEventListener('keydown', keydownHandler)
+
+    //зняття слухача з клавіши клавіатури
+
+    window.removeEventListener("keydown", keydownHandler);
   };
   window.addEventListener("keydown", keydownHandler);
-  
 });
