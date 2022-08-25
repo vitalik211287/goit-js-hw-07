@@ -3,7 +3,6 @@ import { galleryItems } from "./gallery-items.js";
 const { create, visible } = window.basicLightbox;
 // Change code below this line
 
-// создаю разметку
 
 console.log(create, visible);
 const oneGallery = createGallary(galleryItems);
@@ -25,46 +24,43 @@ function createGallary(galleryItems) {
     })
     .join("");
 }
-// рендерю
 
 const addItemsToGallery = document.querySelector(".gallery");
 addItemsToGallery.insertAdjacentHTML("beforeend", oneGallery);
 
-//модалка
-
-//добавляю слушателя при клике
-const xxx = document.querySelector("a");
 
 addItemsToGallery.addEventListener("click", (event) => {
   event.preventDefault();
-
-  //     const targetEl = event.target;
-
-  //     // const newImage =
-
-  //   const modalRef = document.createElement("div");
-
+  const targetEl = event.target;
+  // console.log(targetEl);
+  if (targetEl.nodeName !== "IMG") {
+    return;
+  }
+  const imageSrc = targetEl.dataset.source;
   const instance = create(
-    <div class="gallery__iteml">
+    `<div class="modal">
       <img
-        class="gallery__image"
-        src="${preview}"
-        data-source="${original}"
-        alt="${description}"
+        class="modal__image"
+        src="${imageSrc}"
+        alt="${targetEl.getAttribute("alt")}"
       />
-    </div>
+    </div>`
   );
   instance.show();
   console.log(instance);
+  console.log(targetEl);
+  // const
+  const modalImgRef = document.querySelector(".modal__image");
+  modalImgRef.addEventListener("click", instance.close);
+  const keydownHandler = (event) => {
+    console.log("click", event);
 
-  //   const parentTargetEl = targetEl.closest(".gallery__link");
-  //   console.log(parentTargetEl);
-  //   if (!parentTargetEl) {
-  //     return;
-  //   }
-  const xxx = event.target.dataset.source;
-  console.log(xxx);
-  //    xxx.classList.toggle("gallery__link:hover");
-  console.log(event.target);
-  //   console.log(event.currentTarget);
+    if (event.key !== "Escape") {
+      return;
+    }
+    instance.close();
+    window.removeEventListener('keydown', keydownHandler)
+  };
+  window.addEventListener("keydown", keydownHandler);
+  
 });
