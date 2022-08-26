@@ -4,7 +4,6 @@
 
 // Change code below this line
 
-console.log(galleryItems);
 const oneGallery = createGallary(galleryItems);
 
 function createGallary(galleryItems) {
