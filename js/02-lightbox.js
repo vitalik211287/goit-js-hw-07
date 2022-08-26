@@ -1,6 +1,4 @@
-// import SimpleLightbox from "./node_modules/simplelightbox";
-// import SimpleLightbox from "../node_modules/simplelightbox/dist/simple-lightbox.esm";
-    import { galleryItems } from "./gallery-items.js";
+import { galleryItems } from "./gallery-items.js";
 
 // Change code below this line
 
@@ -22,15 +20,8 @@ function createGallary(galleryItems) {
 const addItemsToGallery = document.querySelector(".gallery");
 addItemsToGallery.insertAdjacentHTML("beforeend", oneGallery);
 
-addItemsToGallery.addEventListener('click', xxx);
-
-function xxx(event) {
-    event.preventDefault();
-   
-    if(event.target.nodeName !== "IMG" ) {return}
-   new SimpleLightbox(".gallery a", {
-     nav: true,
-     captionType: `${event.target.getAttribute("alt")}`,
-   });
-    console.log(event.target);
-}
+new SimpleLightbox(".gallery a.gallery__item", {
+    captionsData: 'alt',
+    captionPosition: 'bottom',
+    captionDelay: '250'
+  });
